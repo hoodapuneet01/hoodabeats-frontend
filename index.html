@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <title>HoodaBeats</title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- MAIN CSS -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+  <canvas id="backgroundParticles"></canvas>
+
+
+<!-- =========================================
+     MODERN 3D NAVBAR
+========================================= -->
+
+<header class="modern-navbar">
+
+    <div class="modern-nav-top">
+
+        <a href="#home" class="modern-logo">
+            <span class="logo-headphone">🎧</span>
+
+            <span class="logo-text">
+                Hooda<span>Beats</span>
+            </span>
+        </a>
+
+        <div class="nav-live">
+            <span></span>
+            LIVE
+        </div>
+
+    </div>
+
+
+    <nav class="modern-nav-links">
+
+        <a href="#home" class="modern-nav-link active">
+            <span>⌂</span>
+            Home
+        </a>
+
+        <a href="#music" class="modern-nav-link">
+            <span>♫</span>
+            Music
+        </a>
+
+        <a href="#albums" class="modern-nav-link">
+            <span>◉</span>
+            Albums
+        </a>
+
+        <a href="#about" class="modern-nav-link">
+            <span>ⓘ</span>
+            About
+        </a>
+
+    </nav>
+
+
+    <div class="modern-nav-bottom">
+
+        <button
+            id="searchBtn"
+            class="modern-search-btn"
+            type="button"
+            aria-label="Search"
+        >
+            🔍
+        </button>
+
+        <a
+    href="admin-login.html"
+    class="hidden-admin-btn"
+    aria-label="Admin Login"
+    title="Admin Login"
+>
+    🔐
+        </a>
+
+    </div>
+
+</header>
+
+
+
+    <!-- =========================================
+         SEARCH PANEL
+    ========================================== -->
+
+    <div
+        id="searchPanel"
+        class="search-panel"
+    >
+
+        <div class="search-box">
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search songs..."
+                autocomplete="off"
+            >
+
+            <button
+                id="closeSearchBtn"
+                type="button"
+            >
+                ✕
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main>
+
+
+        <!-- =========================================
+     3D HERO HOME SECTION
+========================================= -->
+
+<section id="home" class="hero hero-3d">
+
+    <!-- BACKGROUND PARTICLES -->
+
+    <div class="hero-3d-particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+    <!-- HERO CONTENT -->
+
+    <div class="hero-content hero-3d-content">
+
+        <p class="hero-small">
+            ✦ WELCOME TO THE FUTURE OF MUSIC ✦
+        </p>
+
+        <h1>
+            Hooda<span>Beats</span>
+        </h1>
+
+        <p class="hero-description">
+            Your music. Your vibe. Your beats.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#music" class="primary-btn">
+                🎵 Explore Music
+            </a>
+
+            <a href="#about" class="secondary-btn">
+                About Us
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- 3D MUSIC OBJECT -->
+
+    <div class="hero-3d-object">
+
+        <div class="hero-glow"></div>
+
+        <div class="hero-orbit orbit-1"></div>
+        <div class="hero-orbit orbit-2"></div>
+        <div class="hero-orbit orbit-3"></div>
+
+        <div class="hero-disc">
+
+            <div class="disc-lines"></div>
+
+            <div class="disc-center">
+                🎧
+            </div>
+
+        </div>
+
+        <div class="floating-headphones">
+            🎧
+        </div>
+
+        <div class="floating-note note-1">
+            ♪
+        </div>
+
+        <div class="floating-note note-2">
+            ♫
+        </div>
+
+        <div class="floating-note note-3">
+            ♪
+        </div>
+
+    </div>
+
+</section>
+
+
+
+        <!-- =========================================
+             HERO PARTICLES
+        ========================================== -->
+
+        <div class="hero-particles">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+
+        <!-- =========================================
+             3D HOODABEATS SECTION
+        ========================================== -->
+
+        <section
+            class="hooda-3d-section"
+        >
+
+
+            <!-- THREE.JS CANVAS GOES HERE -->
+
+            <div
+                id="hooda3d"
+            ></div>
+
+
+            <!-- CENTER LOGO -->
+
+            <div
+                class="hooda-3d-title"
+            >
+
+                🎧
+
+                <span>
+                    HoodaBeats
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             MUSIC SECTION
+        ========================================== -->
+
+        <section
+            id="music"
+            class="music-section"
+        >
+
+
+            <!-- SECTION TITLE -->
+
+            <div class="section-title">
+
+                <p>
+                    YOUR MUSIC
+                </p>
+
+                <h2>
+                    Latest <span>Beats</span>
+                </h2>
+
+            </div>
+
+
+
+            <!-- =====================================
+                 MUSIC PLAYER
+            ====================================== -->
+
+            <div class="music-player" id="musicPlayer">
+
+
+                <!-- SONG INFORMATION -->
+
+                <div class="player-song-info">
+
+
+                    <div
+                        id="playerCover"
+                        class="player-cover"
+                    >
+                        🎵
+                    </div>
+
+
+                    <div class="player-details">
+
+                        <h3 id="songTitle">
+                            No song selected
+                        </h3>
+
+
+                        <p id="songArtist">
+                            HoodaBeats
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     PLAYER CONTROLS
+                ================================== -->
+
+                <div class="player-controls">
+
+
+                    <!-- BACK 10 -->
+
+                    <button
+                        id="back10Btn"
+                        class="skip-btn"
+                        type="button"
+                        aria-label="Rewind 10 seconds"
+                    >
+
+                        <span class="skip-icon">
+                            ↶
+                        </span>
+
+                        <span class="skip-number">
+                            10
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- PREVIOUS -->
+
+                    <button
+                        id="prevBtn"
+                        class="spotify-side-btn"
+                        type="button"
+                        aria-label="Previous song"
+                    >
+                        ⏮
+                    </button>
+
+
+
+                    <!-- PLAY -->
+
+                    <button
+                        id="playBtn"
+                        class="spotify-play-btn"
+                        type="button"
+                        aria-label="Play or pause"
+                    >
+                        ▶
+                    </button>
+
+
+
+                    <!-- NEXT -->
+
+                    <button
+                        id="nextBtn"
+                        class="spotify-side-btn"
+                        type="button"
+                        aria-label="Next song"
+                    >
+                        ⏭
+                    </button>
+
+
+
+                    <!-- FORWARD 10 -->
+
+                    <button
+                        id="forward10Btn"
+                        class="skip-btn"
+                        type="button"
+                        aria-label="Forward 10 seconds"
+                    >
+
+                        <span class="skip-icon">
+                            ↷
+                        </span>
+
+                        <span class="skip-number">
+                            10
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================
+                     PROGRESS
+                ================================== -->
+
+                <div class="progress-area">
+
+
+                    <span id="currentTime">
+                        0:00
+                    </span>
+
+
+                    <input
+                        id="progress"
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="0"
+                        step="0.1"
+                    >
+
+
+                    <span id="duration">
+                        0:00
+                    </span>
+
+                </div>
+                
+                                <!-- =================================
+                     VOLUME / DOWNLOAD
+                ================================== -->
+
+                <div class="player-bottom">
+
+                    <div class="volume-control">
+
+                        <span>
+                            🔊
+                        </span>
+
+                        <input
+                            id="volume"
+                            type="range"
+                            min="0"
+                            max="1"
+                            value="1"
+                            step="0.01"
+                        >
+
+                    </div>
+
+
+                    <button
+                        id="downloadBtn"
+                        class="download-btn"
+                        type="button"
+                    >
+                        ⬇ Download
+                    </button>
+
+                </div>
+
+
+                <!-- AUDIO -->
+
+                <audio
+                    id="audio"
+                    preload="metadata"
+                ></audio>
+
+            </div>
+
+
+
+            <!-- =====================================
+                 ONLINE SONG LIST
+            ====================================== -->
+
+            <div class="song-list-wrapper">
+
+                <div class="song-list-header">
+
+                    <div>
+
+                        <h3>
+                            🎶 All Songs
+                        </h3>
+
+                        <p>
+                            Music available on HoodaBeats
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="refreshSongsBtn"
+                        type="button"
+                        class="refresh-songs-btn"
+                    >
+                        🔄
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="songList"
+                    class="song-list"
+                >
+
+                    <div class="loading-message">
+                        Loading songs...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =====================================
+                 LOCAL PHONE MUSIC
+            ====================================== -->
+
+            <div class="local-music-card">
+
+                <h3>
+                    📱 Play Music From Your Phone
+                </h3>
+
+
+                <p>
+                    Select an MP3, WAV or M4A file from
+                    your device.
+                </p>
+
+
+                <label
+                    for="musicFile"
+                    class="local-file-btn"
+                >
+                    🎵 Choose Music
+                </label>
+
+
+                <input
+                    id="musicFile"
+                    type="file"
+                    accept="audio/*,.mp3,.wav,.m4a"
+                    hidden
+                >
+
+
+                <div
+                    id="selectedFile"
+                    class="selected-file"
+                >
+                    No local music selected
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             ALBUMS
+        ========================================== -->
+
+        <section
+            id="albums"
+            class="albums-section"
+        >
+
+            <div class="section-title">
+
+                <p>
+                    COLLECTION
+                </p>
+
+                <h2>
+                    Hooda <span>Music</span>
+                </h2>
+
+            </div>
+
+
+            <div
+                id="albumsGrid"
+                class="albums-grid"
+            >
+
+
+                <div class="album-card">
+
+                    <div class="album-cover">
+                        🎵
+                    </div>
+
+                    <h3>
+                        Hooda Hits
+                    </h3>
+
+                    <p>
+                        Latest songs
+                    </p>
+
+                </div>
+
+
+
+                <div class="album-card">
+
+                    <div class="album-cover">
+                        🎧
+                    </div>
+
+                    <h3>
+                        Hooda Vibes
+                    </h3>
+
+                    <p>
+                        Feel the music
+                    </p>
+
+                </div>
+
+
+
+                <div class="album-card">
+
+                    <div class="album-cover">
+                        🔥
+                    </div>
+
+                    <h3>
+                        Hooda Beats
+                    </h3>
+
+                    <p>
+                        Trending beats
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             ABOUT
+        ========================================== -->
+
+        <section
+            id="about"
+            class="about-section"
+        >
+
+            <div class="about-content">
+
+                <p class="about-small">
+                    ABOUT HOODABEATS
+                </p>
+
+
+                <h2>
+                    Music that moves
+                    <span>you.</span>
+                </h2>
+
+
+                <p>
+                    HoodaBeats is a modern music platform
+                    created to bring songs, beats and
+                    artists together in one place.
+                </p>
+
+
+                <p>
+                    Listen to music, discover new beats
+                    and enjoy your favourite tracks
+                    wherever you are.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             FOOTER
+        ========================================== -->
+
+        <footer class="footer">
+
+            <div class="footer-logo">
+                🎧 HoodaBeats
+            </div>
+
+
+            <p>
+                © 2026 HoodaBeats. All rights reserved.
+            </p>
+
+
+            <div class="footer-links">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#music">
+                    Music
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+
+
+    <!-- =========================================
+         THREE.JS
+    ========================================== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script src="three-visualizer.js"></script>
+
+<script src="script.js"></script>
+
+
+</body>
+
+          </html>
