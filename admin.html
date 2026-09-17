@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#08060f"
+    >
+
+    <title>HoodaBeats Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         ADMIN PAGE
+    ================================== -->
+
+    <main class="admin-page">
+
+
+        <!-- =================================
+             HEADER
+        ================================== -->
+
+        <header class="admin-header">
+
+            <div class="admin-brand">
+
+                <div class="admin-logo">
+                    🎧
+                </div>
+
+                <div>
+
+                    <h1>
+                        HoodaBeats
+                        <span>Admin</span>
+                    </h1>
+
+                    <p>
+                        Upload and manage your music
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-header-actions">
+
+                <a
+                    href="index.html"
+                    class="home-btn"
+                >
+                    🏠 Home
+                </a>
+
+
+                <button
+                    id="logoutBtn"
+                    class="logout-btn"
+                    type="button"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================
+             UPLOAD SECTION
+        ================================== -->
+
+        <section class="admin-card">
+
+
+            <div class="card-heading">
+
+                <p class="card-label">
+                    HOODABEATS LIBRARY
+                </p>
+
+                <h2>
+                    Upload New Song
+                </h2>
+
+                <p>
+                    Add music to your permanent library.
+                </p>
+
+            </div>
+
+
+
+            <!-- UPLOAD FORM -->
+
+            <form
+                id="uploadForm"
+                enctype="multipart/form-data"
+            >
+
+
+                <!-- SONG TITLE -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Song Title
+                    </label>
+
+                    <input
+                        id="title"
+                        name="title"
+                        type="text"
+                        placeholder="Enter song title"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- ARTIST -->
+
+                <div class="form-group">
+
+                    <label for="artist">
+                        Artist
+                    </label>
+
+                    <input
+                        id="artist"
+                        name="artist"
+                        type="text"
+                        placeholder="Enter artist name"
+                    >
+
+                </div>
+
+
+
+                <!-- MUSIC FILE -->
+
+                <div class="form-group">
+
+                    <label for="music">
+                        Music File
+                    </label>
+
+                    <input
+                        id="music"
+                        name="music"
+                        type="file"
+                        accept="audio/*,.mp3,.wav,.m4a"
+                        required
+                    >
+
+                    <p class="file-help">
+                        MP3, WAV or M4A | Maximum 50MB
+                    </p>
+
+                </div>
+
+
+
+                <!-- UPLOAD BUTTON -->
+
+                <button
+                    id="uploadBtn"
+                    type="submit"
+                    class="upload-btn"
+                >
+                    🚀 Upload Song
+                </button>
+
+
+                <!-- UPLOAD MESSAGE -->
+
+                <p
+                    id="uploadMessage"
+                    class="upload-message"
+                ></p>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =================================
+             SONGS SECTION
+        ================================== -->
+
+        <section class="admin-card">
+
+
+            <div class="songs-heading">
+
+                <div>
+
+                    <p class="card-label">
+                        YOUR LIBRARY
+                    </p>
+
+                    <h2>
+                        🎶 Uploaded Songs
+                    </h2>
+
+                    <p>
+                        Manage your uploaded music.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="refreshBtn"
+                    class="refresh-btn"
+                    type="button"
+                >
+                    🔄 Refresh
+                </button>
+
+            </div>
+
+
+
+            <!-- SONG LIST -->
+
+            <div
+                id="songsList"
+                class="admin-song-list"
+            >
+
+                <div class="loading-message">
+                    Loading songs...
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =================================
+         JAVASCRIPT
+    ================================== -->
+
+    <script>
+      /* =====================================================
+   HOODA BEATS ADMIN JAVASCRIPT
+===================================================== */
+
+
+/* =================================
+   API CONFIGURATION
+================================= */
+
+const API_URL =
+    "https://hoodabeats-backend.onrender.com";
+
+
+const TOKEN_KEY =
+    "hoodabeats_admin_token";
+
+
+let token =
+    localStorage.getItem(TOKEN_KEY);
+
+
+
+/* =================================
+   ELEMENTS
+================================= */
+
+const uploadForm =
+    document.getElementById("uploadForm");
+
+
+const titleInput =
+    document.getElementById("title");
+
+
+const artistInput =
+    document.getElementById("artist");
+
+
+const musicInput =
+    document.getElementById("music");
+
+
+const uploadBtn =
+    document.getElementById("uploadBtn");
+
+
+const uploadMessage =
+    document.getElementById("uploadMessage");
+
+
+const songsList =
+    document.getElementById("songsList");
+
+
+const refreshBtn =
+    document.getElementById("refreshBtn");
+
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+
+
+/* =================================
+   CHECK ADMIN LOGIN
+================================= */
+
+async function checkAdmin() {
+
+    token =
+        localStorage.getItem(TOKEN_KEY);
+
+
+    if (!token) {
+
+        window.location.replace(
+            "admin-login.html"
+        );
+
+        return false;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL + "/admin-check",
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
+
+            localStorage.removeItem(
+                TOKEN_KEY
+            );
+
+            window.location.replace(
+                "admin-login.html"
+            );
+
+            return false;
+
+        }
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Admin check error:",
+            error
+        );
+
+
+        /*
+           Keep page available if Render
+           backend is temporarily sleeping.
+        */
+
+        return true;
+
+    }
+
+}
+
+
+
+/* =================================
+   UPLOAD SONG
+================================= */
+
+if (uploadForm) {
+
+    uploadForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const title =
+                titleInput.value.trim();
+
+
+            const artist =
+                artistInput.value.trim();
+
+
+            const musicFile =
+                musicInput.files[0];
+
+
+            if (!title) {
+
+                alert(
+                    "Please enter song title."
+                );
+
+                return;
+
+            }
+
+
+            if (!musicFile) {
+
+                alert(
+                    "Please select a music file."
+                );
+
+                return;
+
+            }
+
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                "title",
+                title
+            );
+
+
+            formData.append(
+                "artist",
+                artist ||
+                "Unknown Artist"
+            );
+
+
+            formData.append(
+                "music",
+                musicFile
+            );
+
+
+            uploadBtn.disabled =
+                true;
+
+
+            uploadBtn.textContent =
+                "⏳ Uploading...";
+
+
+            uploadMessage.textContent =
+                "Uploading song, please wait...";
+
+
+            uploadMessage.className =
+                "upload-message";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL +
+                        "/upload-song",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Authorization":
+                                    "Bearer " +
+                                    token
+                            },
+
+                            body:
+                                formData
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    response.status === 401 ||
+                    response.status === 403
+                ) {
+
+                    localStorage.removeItem(
+                        TOKEN_KEY
+                    );
+
+                    window.location.replace(
+                        "admin-login.html"
+                    );
+
+                    return;
+
+                }
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Upload failed."
+                    );
+
+                }
+
+
+                uploadMessage.textContent =
+                    "✅ Song uploaded successfully!";
+
+
+                uploadMessage.className =
+                    "upload-message success";
+
+
+                uploadForm.reset();
+
+
+                await loadSongs();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Upload error:",
+                    error
+                );
+
+
+                uploadMessage.textContent =
+                    "❌ " + error.message;
+
+
+                uploadMessage.className =
+                    "upload-message error";
+
+
+            } finally {
+
+                uploadBtn.disabled =
+                    false;
+
+
+                uploadBtn.textContent =
+                    "🚀 Upload Song";
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =================================
+   DELETE SONG - MOBILE POPUP
+================================= */
+
+function showDeleteConfirm(songTitle) {
+
+    return new Promise(function(resolve) {
+
+        const overlay = document.createElement("div");
+
+        overlay.style.cssText = `
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.75);
+        `;
+
+        const box = document.createElement("div");
+
+        box.style.cssText = `
+            width: 100%;
+            max-width: 360px;
+            padding: 25px 20px;
+            border-radius: 22px;
+            text-align: center;
+            color: white;
+            background: #21102f;
+            border: 1px solid #a855f7;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
+            font-family: Arial, sans-serif;
+        `;
+
+        const heading = document.createElement("h3");
+
+        heading.textContent = "🗑️ Delete Song?";
+
+        heading.style.cssText = `
+            margin-bottom: 15px;
+            font-size: 22px;
+        `;
+
+        const message = document.createElement("p");
+
+        message.textContent =
+            'Are you sure you want to delete "' +
+            songTitle +
+            '"?';
+
+        message.style.cssText = `
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-size: 15px;
+            color: #ddd;
+            overflow-wrap: anywhere;
+        `;
+
+        const buttons = document.createElement("div");
+
+        buttons.style.cssText = `
+            display: flex;
+            gap: 12px;
+        `;
+
+        const cancelBtn = document.createElement("button");
+
+        cancelBtn.textContent = "Cancel";
+
+        cancelBtn.style.cssText = `
+            flex: 1;
+            padding: 14px 8px;
+            border: 1px solid #777;
+            border-radius: 12px;
+            background: #333;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+        `;
+
+        const okBtn = document.createElement("button");
+
+        okBtn.textContent = "OK, Delete";
+
+        okBtn.style.cssText = `
+            flex: 1;
+            padding: 14px 8px;
+            border: none;
+            border-radius: 12px;
+            background: #e11d48;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+        `;
+
+        function closePopup(result) {
+
+            overlay.remove();
+
+            resolve(result);
+
+        }
+
+        cancelBtn.addEventListener("click", function() {
+
+            closePopup(false);
+
+        });
+
+        okBtn.addEventListener("click", function() {
+
+            closePopup(true);
+
+        });
+
+        buttons.appendChild(cancelBtn);
+
+        buttons.appendChild(okBtn);
+
+        box.appendChild(heading);
+
+        box.appendChild(message);
+
+        box.appendChild(buttons);
+
+        overlay.appendChild(box);
+
+        document.body.appendChild(overlay);
+
+    });
+
+}
+
+
+/* =================================
+   DELETE SONG
+================================= */
+
+async function deleteSong(songId, songTitle) {
+
+    const confirmDelete =
+        await showDeleteConfirm(songTitle);
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+    try {
+
+        const response = await fetch(
+
+            API_URL + "/songs/" + songId,
+
+            {
+                method: "DELETE",
+
+                headers: {
+                    "Authorization":
+                        "Bearer " + token
+                }
+            }
+
+        );
+
+        const data = await response.json();
+
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
+
+            localStorage.removeItem(TOKEN_KEY);
+
+            window.location.replace(
+                "admin-login.html"
+            );
+
+            return;
+
+        }
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message || "Delete failed."
+            );
+
+        }
+
+        await loadSongs();
+
+    } catch (error) {
+
+        console.error(
+            "Delete error:",
+            error
+        );
+
+        alert("❌ " + error.message);
+
+    }
+
+}
+
+
+
+
+/* =================================
+   LOAD SONGS
+================================= */
+
+async function loadSongs() {
+
+
+    if (!songsList) {
+
+        return;
+
+    }
+
+
+    songsList.innerHTML = `
+
+        <div class="loading-message">
+            Loading songs...
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL + "/songs"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Could not load songs."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const songs =
+            Array.isArray(data.songs)
+                ? data.songs
+                : Array.isArray(data)
+                    ? data
+                    : [];
+
+
+        if (songs.length === 0) {
+
+            songsList.innerHTML = `
+
+                <div class="loading-message">
+                    No songs uploaded yet.
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        songsList.innerHTML =
+            "";
+
+
+        songs.forEach(
+            function(song) {
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "admin-song-item";
+
+
+                const cover =
+                    song.cover_url
+                        ? `
+                            <img
+                                src="${escapeHTML(
+                                    song.cover_url
+                                )}"
+                                alt="Song cover"
+                            >
+                          `
+                        : `
+                            <div class="no-cover">
+                                🎵
+                            </div>
+                          `;
+
+
+                item.innerHTML = `
+
+                    <div class="admin-song-cover">
+
+                        ${cover}
+
+                    </div>
+
+
+                    <div class="admin-song-info">
+
+                        <h3>
+                            ${escapeHTML(
+                                song.title ||
+                                "Unknown Song"
+                            )}
+                        </h3>
+
+
+                        <p>
+                            ${escapeHTML(
+                                song.artist ||
+                                "Unknown Artist"
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div class="admin-song-actions">
+
+
+                        ${
+                            song.music_url
+                                ? `
+                                    <a
+                                        href="${escapeHTML(
+                                            song.music_url
+                                        )}"
+                                        target="_blank"
+                                        rel="noopener"
+                                        class="listen-btn"
+                                    >
+                                        ▶ Listen
+                                    </a>
+                                  `
+                                : ""
+                        }
+
+
+                        <button
+                            type="button"
+                            class="delete-song-btn"
+                        >
+                            🗑️ Delete
+                        </button>
+
+
+                    </div>
+
+                `;
+
+
+                const deleteButton =
+                    item.querySelector(
+                        ".delete-song-btn"
+                    );
+
+
+                deleteButton.addEventListener(
+                    "click",
+                    function() {
+
+                        deleteSong(
+                            song.id,
+                            song.title ||
+                            "Unknown Song"
+                        );
+
+                    }
+                );
+
+
+                songsList.appendChild(
+                    item
+                );
+
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Load songs error:",
+            error
+        );
+
+
+        songsList.innerHTML = `
+
+            <div class="loading-message">
+                ❌ Could not load songs.
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =================================
+   ESCAPE HTML
+================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =================================
+   REFRESH BUTTON
+================================= */
+
+if (refreshBtn) {
+
+    refreshBtn.addEventListener(
+        "click",
+        function() {
+
+            loadSongs();
+
+        }
+    );
+
+}
+
+
+
+/* =================================
+   LOGOUT
+================================= */
+
+if (logoutBtn) {
+
+    logoutBtn.addEventListener(
+        "click",
+        async function() {
+
+
+            logoutBtn.disabled =
+                true;
+
+
+            try {
+
+                await fetch(
+                    API_URL +
+                    "/admin-logout",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Authorization":
+                                "Bearer " +
+                                token
+                        }
+                    }
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+
+            localStorage.removeItem(
+                TOKEN_KEY
+            );
+
+
+            token =
+                null;
+
+
+            window.location.replace(
+                "admin-login.html"
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =================================
+   PAGE START
+================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+
+        const isAdmin =
+            await checkAdmin();
+
+
+        if (!isAdmin) {
+
+            return;
+
+        }
+
+
+        await loadSongs();
+
+    }
+);
+      </script>
+
+</body>
+
+</html>

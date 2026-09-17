@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="HoodaBeats Admin Login"
+    >
+
+    <title>
+        HoodaBeats - Admin Login
+    </title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #35145f,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #171047,
+                    transparent 35%
+                ),
+                #070711;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+        }
+
+
+        /* LOGIN PAGE */
+
+        .login-page {
+
+            width: 100%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+
+        /* LOGIN CARD */
+
+        .login-card {
+
+            width: 100%;
+
+            max-width: 430px;
+
+            padding: 35px;
+
+            background:
+                rgba(20, 20, 40, 0.90);
+
+            border:
+                1px solid
+                rgba(168, 85, 247, 0.30);
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.50);
+
+            text-align: center;
+
+            backdrop-filter:
+                blur(15px);
+
+        }
+
+
+        /* LOGO */
+
+        .login-logo {
+
+            width: 75px;
+
+            height: 75px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #9333ea,
+                    #c026d3
+                );
+
+            font-size: 34px;
+
+            box-shadow:
+                0 0 30px
+                rgba(168, 85, 247, 0.35);
+
+        }
+
+
+        /* TITLE */
+
+        .login-card h1 {
+
+            font-size: 32px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .login-card h1 span {
+
+            color: #a855f7;
+
+        }
+
+
+        .login-subtitle {
+
+            color: #aaa;
+
+            margin-bottom: 30px;
+
+            font-size: 15px;
+
+        }
+
+
+        /* INPUT GROUP */
+
+        .input-group {
+
+            text-align: left;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #ddd;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+
+        .input-group input {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border-radius: 11px;
+
+            border:
+                1px solid
+                #3b3152;
+
+            background:
+                #0f0f1c;
+
+            color: white;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                border 0.2s,
+                box-shadow 0.2s;
+
+        }
+
+
+        .input-group input:focus {
+
+            border-color:
+                #a855f7;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(168, 85, 247, 0.12);
+
+        }
+
+
+        .input-group input::placeholder {
+
+            color: #777;
+
+        }
+
+
+        /* LOGIN BUTTON */
+
+        #loginBtn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 5px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #9333ea,
+                    #c026d3
+                );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                opacity 0.2s;
+
+        }
+
+
+        #loginBtn:hover {
+
+            transform:
+                translateY(-2px);
+
+            opacity: 0.9;
+
+        }
+
+
+        #loginBtn:disabled {
+
+            opacity: 0.55;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+        }
+
+
+        /* MESSAGE */
+
+        .login-message {
+
+            min-height: 22px;
+
+            margin-top: 16px;
+
+            font-size: 14px;
+
+        }
+
+
+        .login-message.error {
+
+            color: #f87171;
+
+        }
+
+
+        .login-message.success {
+
+            color: #4ade80;
+
+        }
+
+
+        /* BACK HOME */
+
+        .back-home {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            color: #c084fc;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+        }
+
+
+        .back-home:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* SECURITY TEXT */
+
+        .security-text {
+
+            margin-top: 22px;
+
+            color: #666;
+
+            font-size: 12px;
+
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 500px) {
+
+            body {
+
+                padding: 15px;
+
+            }
+
+
+            .login-card {
+
+                padding: 28px 20px;
+
+                border-radius: 18px;
+
+            }
+
+
+            .login-logo {
+
+                width: 65px;
+
+                height: 65px;
+
+                font-size: 29px;
+
+            }
+
+
+            .login-card h1 {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-page">
+
+
+    <div class="login-card">
+
+
+        <!-- LOGO -->
+
+        <div class="login-logo">
+
+            🎵
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1>
+
+            Hooda<span>Beats</span>
+
+        </h1>
+
+
+        <p class="login-subtitle">
+
+            🔐 Admin Panel Login
+
+        </p>
+
+
+
+        <!-- LOGIN FORM -->
+
+        <form id="loginForm">
+
+
+            <!-- USERNAME -->
+
+            <div class="input-group">
+
+                <label for="username">
+
+                    Username
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter admin username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="input-group">
+
+                <label for="password">
+
+                    Password
+
+                </label>
+
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter admin password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                id="loginBtn"
+            >
+
+                🔐 Login
+
+            </button>
+
+
+
+            <!-- MESSAGE -->
+
+            <p
+                id="loginMessage"
+                class="login-message"
+            ></p>
+
+
+        </form>
+
+
+
+        <!-- BACK HOME -->
+
+        <a
+            href="index.html"
+            class="back-home"
+        >
+
+            ← Back to HoodaBeats
+
+        </a>
+
+
+        <p class="security-text">
+
+            🔒 Authorized administrators only
+
+        </p>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- IMPORTANT: LOAD JAVASCRIPT -->
+
+<script src="admin-login.js"></script>
+
+
+</body>
+
+</html>
