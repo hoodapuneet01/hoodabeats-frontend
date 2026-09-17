@@ -494,3 +494,97 @@ searchInput?.addEventListener("input", () => {
 ===================================================== */
 
 loadSongs();
+/* =====================================================
+   HOODABEATS MOVING BACKGROUND PARTICLES
+===================================================== */
+
+(function () {
+    "use strict";
+
+    const canvas = document.getElementById("backgroundParticles");
+
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    let particles = [];
+    let width = 0;
+    let height = 0;
+
+    const particleCount = 90;
+
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+        canvas.width = width * pixelRatio;
+        canvas.height = height * pixelRatio;
+
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    }
+
+    function createParticles() {
+        particles = [];
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+
+                size: Math.random() * 2 + 0.5,
+
+                speedX: (Math.random() - 0.5) * 0.5,
+                speedY: (Math.random() - 0.5) * 0.5,
+
+                opacity: Math.random() * 0.6 + 0.2
+            });
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, width, height);
+
+        particles.forEach((particle) => {
+            particle.x += particle.speedX;
+            particle.y += particle.speedY;
+
+            if (particle.x < 0) particle.x = width;
+            if (particle.x > width) particle.x = 0;
+
+            if (particle.y < 0) particle.y = height;
+            if (particle.y > height) particle.y = 0;
+
+            ctx.beginPath();
+
+            ctx.arc(
+                particle.x,
+                particle.y,
+                particle.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                `rgba(192, 132, 252, ${particle.opacity})`;
+
+            ctx.fill();
+        });
+
+        requestAnimationFrame(animateParticles);
+    }
+
+    resizeCanvas();
+    createParticles();
+    animateParticles();
+
+    window.addEventListener("resize", () => {
+        resizeCanvas();
+        createParticles();
+    });
+
+})();
